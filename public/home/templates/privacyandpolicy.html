@@ -1,0 +1,32 @@
+<!--sign_in-form-->
+<div class="sign_in" ng-controller="ForgotCtrl">
+	<div class="container">
+    	<div class="row">
+        <div class="signin_heading">
+            <h3>Reset Password</h3>
+            <P>Enter details to Reset password </P>
+            	</div>
+        	<div class="col-sm-offset-4 col-sm-4">
+       
+       
+          <form method="post" ng-submit="resetpass(user)">
+<!--  <div class="form-group">
+    <input type="email" class="form-control ctrl_fm1" id="email" placeholder="Your current Password">
+  </div>-->
+  <div class="form-group">
+    <input type="password" class="form-control ctrl_fm1" ng-model='user.password' name='password' id="pwd" placeholder="Your Password">
+  </div>
+  <div class="form-group">
+     <input type="password" class="form-control ctrl_fm1" ng-model='user.confirmpassword' name='confirmpassword' id="pwd" placeholder="Confirm Password">
+  </div>
+  <button type="submit" class="btn btn-default sub_falt">Submit</button>
+</form> 
+    
+
+          </div>
+    	</div>
+	</div>
+  </div>
+
+
+

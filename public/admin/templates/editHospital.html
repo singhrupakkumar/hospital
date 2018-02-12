@@ -1,0 +1,79 @@
+
+    <section class="content-header">
+        <h1>
+            Hospital
+            <small>Edit Hospital</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/dashboard#/hospitalList"><i class="fa fa-dashboard"></i> Hospital</a></li>
+            <li class="active">Edit Hospital</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-11">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Edit Hospital</h3>
+                    </div>
+                    <div class="form-group">
+                        <div class="alert alert-success" ng-show="message">
+                            <strong ng-bind="message" ></strong> 
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='form-group'>
+                            <input type='text' placeholder='Title' ng-model='hospital.title' name='title' class='form-control'>
+                        </div>
+                    </div>
+                    <div class="form-group full-height">
+                        <div class='form-group'>
+                                    <select name="user_id" class="form-control" ng-model='hospital.user_id' required="">
+                                        <option value="">Select User</option>
+                                        <option value="{{value._id}}" ng-repeat="(key, value) in userlist" ng-if="value.role != 'admin'" ng-selected="{{value._id == hospital.user_id}}">{{value.firstname}} {{value.lastname}}</option>
+                                    </select>
+                        </div>                    
+                    </div>
+					<div class="col-lg-8 full-height">
+						<div class='form-group'>
+							<textarea required="" class="form-control full-height" id="pad" ng-model='hospital.description' name="description" placeholder='Write your description'></textarea>
+							<div class="col-md-6 full-height" id="markdown">
+								<div btf-markdown='hospital.description'></div>
+							</div>
+						</div>
+					</div>
+                    <div class='form-group'>
+                        <div class='form-group'>
+                            <input type='text' placeholder='Address' ng-model='hospital.address' required="" name='address' class='form-control'>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-height">
+                        <div class='form-group'>
+
+Upload image <input type="file" id="banner_image" data-ng-file-select="onFileSelect($files)" accept="image/png, image/jpeg" class="form-control">
+<img ng-src="uploads/hospitals/{{hospital.bannerimage}}" style="width: 80px; height: 80px" alt="{{hospital.title}}" />
+                        </div>
+                    </div>
+
+					
+					    <div class="form-group full-height">
+                        <div class='form-group'>
+
+Gallery image <input type="file" class="banner_image" data-ng-file-select="onFileSelectgallery($files)" accept="image/png, image/jpeg" class="form-control" multiple>
+<img ng-repeat='galleryimg in galleryimgs track by $index' ng-src="uploads/hospitals/gallery/{{galleryimg}}" style="width: 80px; height: 80px" alt="{{hospital.title}}" />
+                        </div>
+                    </div>
+					
+
+                    <div class="form-group">
+                        <input type='hidden' placeholder='hospital' ng-model='hospital.id' name='id' class='form-control'>
+                    </div>                    
+                    <div class="form-group">
+                        <div class='btn btn-success pull-right' ng-click='editHospital()'>Publish Hospital</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

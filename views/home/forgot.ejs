@@ -1,0 +1,101 @@
+<html lang="en" ng-app='fwrk.home' ng-controller="UserCtrl">   
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="description" content="PerDIEMz">  
+        <meta name="author" content="Rupak Kumar Singh">
+        <title>PerDIEMz</title> 
+
+
+        <!-- Bootstrap -->
+        <link href="/home/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom Style Css -->
+        <link href="/home/css/style.css" rel="stylesheet">
+        <!-- font awesome Style Css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <!-- font Roboto Style Css -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+        <!-- Include all compiled plugins (below), or include individual files as needed --> 
+        <script src="home/js/bootstrap.min.js"></script> 
+
+
+
+    </head>
+    <body>
+
+        <div ng-include='"/home/templates/header.html"'></div>
+
+
+        <!-----banner-section----->
+        <div class="apron_pic">
+            <img src="/home/images/rest_bner.jpg">
+
+            <div class="sign_bner">
+                <h3>Forgot password</h3>
+            </div>
+        </div>
+        <!-----------sign_up_section----------->
+        <div class="frm_sgnup">
+            <div class="container">
+                <div class="row">
+                    <div class="sgnup_heading">
+                        <h4>Forgot Password</h4> 
+                    </div> 
+                    <div class="frm_sgncvr">
+                        <p style="color:red;text-align: center;" ng-if="send">{{send}}</p>      
+                        <form ng-submit="forgotpassword()"> 
+                            <div class="input-group zip_full">
+                                <input id="email" type="email" ng-model='user.email' name='email' required class="form-control ctrl_smn"  placeholder="Enter your registered email address">
+                            </div>
+                        
+                        <button type="submit" class="btn btn-primary ble_stl cntr_sgn">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-------------footer-section---------------->
+
+
+        <div ng-include='"/home/templates/footer.html"'></div>
+
+        <!-- Angular Material Dependencies -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <!-- UI Router -->
+        <script src="https://cdn.jsdelivr.net/npm/angular-ui-router@0.4.3/release/angular-ui-router.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+
+        <!-- Angular Material -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+
+
+        <!-- Custom JS -->
+        <script src='/home/js/app.js'></script>
+        <script src='/home/js/controllers/user.js'></script>
+
+        <script src='/common/modules/users.js'></script>
+        <script src='/common/modules/hospitals.js'></script>
+        <script src='/common/modules/pages.js'></script>
+
+
+
+
+        <script type='text/javascript'>
+                        var currentUser = <%- JSON.stringify(user); %> ;
+        app.run(function($rootScope) {
+                                $rootScope.currentUser = currentUser;
+                        console.log($rootScope.currentUser);
+        });
+        </script>  
+
+
+    </body>
+</html>    

@@ -1,0 +1,133 @@
+
+<section class="content-header">
+  
+    <h1>
+    Users   <a href="/admin/dashboard#/addUser" class="btn btn-warning">Add User</a>
+    <small></small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Users</li>
+    </ol>
+    
+   
+</section>
+    <div class="form-group">
+        <div class="alert alert-success" ng-show="del">  
+            <strong ng-bind="del" ></strong> 
+        </div>
+    </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+
+                <div class="box">
+                    <div class="box-header" ng-if="hideShow">
+                        <h3 class="box-title">Users List</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" ng-if="hideShow">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr. no</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Created</th>
+                                    <th scope="col" class="actions">Actions</th>
+                                </tr>
+                            </thead>   
+                            <tbody>
+
+                                <tr ng-repeat='user in users track by $index'>
+                                    <td ng-class="'{{user._id}}'">{{$index + 1}}</td>                                              
+                                    <td ng-class="'{{user._id}}'">{{user.email}}</td>
+                                    <td ng-class="'{{user._id}}'">{{user.username}} </td>
+
+
+                                    <td ng-class="'{{user._id}}'" ng-if='user.role=="admin"'>Admin </td> 
+                                    <td ng-class="'{{user._id}}'" ng-if='user.role==1'>Hospital Administaror </td> 
+                                    <td ng-class="'{{user._id}}'" ng-if='user.role!=1 && user.role!="admin"'>{{user.type}}</td> 
+                                    
+                                    <td ng-class="'{{user._id}}'">{{user.created_at | date}}</td>
+                                    
+                                    
+                                    <td class="actions {{user._id}}">
+                                        <a href="javascript:void(0)" ng-click='setActive(user)' style="cursor: pointer"  title="View" class="btn btn-info btn-xs {{user._id}}"><span class="fa fa-eye"></span><span class="sr-only">View</span></a> 
+
+                                        <a ui-sref="editUser({id:user._id})" title="Edit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span><span class="sr-only">Edit</span></a> 
+
+
+                                        <a href="javascript:void(0)" ng-click="deleteUser(user._id)" class="btn btn-danger btn-xs delt {{user._id}}">Delete</a>
+                                    </td>  
+                                </tr>                                
+                            </tbody> 
+                        </table>
+                    </div>
+                    <div class='col-sm-12 full-height'>
+                        <!-- <div ng-show="activeUser.email"> -->
+                        <div ng-if="!hideShow">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">User Details</h3>
+                                            <a class="pull-right" id="mybutton"  ng-click="listShow(hideShow)">Back</a>
+
+
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Fields</th>
+                                                    <th>Data</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>{{activeUser.username}}</td>
+                                                </tr>
+<!--                                                 <tr>
+                                                    <td>last Name</td>
+                                                    <td>{{activeUser.lastname}}</td>
+                                                </tr> -->
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>{{activeUser.email}}</td>
+                                                </tr> 
+                                                 
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td>{{activeUser.status==0 ? "Activate" : "DeActivate"  }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Role</td>
+
+                                    <td ng-class="'{{activeUser._id}}'" ng-if='activeUser.role=="admin"'>Admin </td> 
+                                    <td ng-class="'{{activeUser._id}}'" ng-if='activeUser.role==1'>Hospital Administaror </td> 
+                                    <td ng-class="'{{activeUser._id}}'" ng-if='activeUser.role!=1 && activeUser.role!="admin"'>{{activeUser.type}}</td>  
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body -->
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>  

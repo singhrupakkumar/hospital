@@ -1,0 +1,80 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Single User
+            <small>Single User</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Single User</a></li>
+            <li class="active">Single User</li>
+        </ol>
+    </section>
+    <div class="form-group">
+        <div class="alert alert-success" ng-show="del">
+            <strong ng-bind="del" ></strong> 
+        </div>
+    </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class='col-sm-8 full-height'>
+                        <div ng-show="user.email">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Single data</h3>
+
+
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Fields</th>
+                                                    <th>Data</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>First Name</td>
+                                                    <td>{{user.firstname}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>last Name</td>
+                                                    <td>{{user.lastname}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>{{user.email}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Profile Pic</td>
+                                                    <td>{{user.image}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>DOB</td>
+                                                    <td>{{user.dob | date}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td>{{user.status==1 ? "Activate" : "DeActivate"  }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Role</td>
+                                                    <td>{{user.role}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body -->
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </section>
+</div>            

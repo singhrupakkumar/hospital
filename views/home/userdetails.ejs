@@ -1,0 +1,262 @@
+<html lang="en" ng-app='fwrk.home' ng-controller="UserCtrl">   
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="description" content="PerDIEMz">  
+        <meta name="author" content="Rupak Kumar Singh">
+        <title>PerDIEMz</title>
+
+
+        <!-- Bootstrap -->
+        <link href="/home/css/bootstrap.min.css" rel="stylesheet">  
+        <!-- Custom Style Css -->
+        <link href="/home/css/style.css" rel="stylesheet">
+        <!-- font awesome Style Css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <!-- font Roboto Style Css -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+        <!-- Include all compiled plugins (below), or include individual files as needed --> 
+        <script src="/home/js/bootstrap.min.js"></script>  
+
+
+
+    </head>
+    <body>
+
+        <div ng-include='"/home/templates/header.html"'></div>  
+        <!-----banner-section----->
+        <div class="apron_pic">
+            <img src="/home/images/dctr_bnr.jpg">  
+
+            <div class="sign_bner">
+                <h3>Doctor profile</h3>
+            </div>
+        </div>
+        <!-----------doctor_profile_section----------->
+        <div class="doctor_section">
+            <div class="container">
+                <div class="row">
+                    <div class="dctr_hdn">
+                        <div class="col-sm-4">
+                            <div class="ldy_cvr">
+                                <div class="profile_min">
+                                     <img ng-show="currentdatanew.image" ng-src="{{currentdatanew.image}}">
+                                     <img ng-show="!currentdatanew.image" ng-src="/home/images/pplr_usr.jpg">
+                                       
+                                </div>
+                                <div class="lst_tme">
+                                    <ul>
+                                        <li>
+                                            <button type="button" class="btn btn-primary ble_stl fl_snd">Send Request</button>
+                                        </li>
+                                        <li>
+                                            <div class="str_ld">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+
+                                            </div>
+                                        </li>  
+                                        <li>
+                                            <span class="hr_set">$12/hour</span>  
+                                        </li>
+                                        <li>
+                                            <span class="tme_mrng" ng-show="currentdatanew.shift">{{currentdatanew.shift}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="ldy_acrn">
+                                <div class="div_lst">
+                                    <ul>
+                                        <li>
+                                            <div class="dr_nme">
+                                                <h3 ng-show="currentdatanew.username">{{currentdatanew.username}}</h3>  
+                                                <span ng-show="currentdatanew.type">{{currentdatanew.type}}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="royl_sctn">
+                                                <h3>Royal Prince alfered hospital- sydney</h3>
+                                                <span>June 2009 - july 2016</span>  
+
+                                                <p ng-show="currentdatanew.description">{{currentdatanew.description}}</p>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="acc_tre">
+                                <div class="panel-group wrap" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Specialties
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="spl_wll">
+                                                    <div class="col-sm-6">
+                                                        <div class="spcl_ftr">
+                                                            <h3>Cardiology Clinic</h3>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="spcl_ftr">
+                                                            <h3>Children Clinic</h3>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="spcl_ftr">
+                                                            <h3>Dermatology Clinic</h3>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="spcl_ftr">
+                                                            <h3>Family Clinic</h3>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end of panel -->
+
+                                    <div class="panel">
+                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Awards & Recognitions
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                            <div class="panel-body">
+                                                <div class="amn_lst">
+                                                    <ul>
+                                                        <li>
+                                                            <h5>Summa Cum Laude, Yale University  (April 8, 2015)</h5>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></li>
+
+                                                        <li>
+                                                            <h5>Summa Cum Laude, Yale University  (April 8, 2015)</h5>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></li>
+
+                                                        <li>
+                                                            <h5>Summa Cum Laude, Yale University  (April 8, 2015)</h5>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="glry_st">
+                                                    <div class="glry_hdng">
+                                                        <h3>Gallery</h3>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="glr_pcs">
+                                                            <img src="/home/images/half_dctr.png">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="glr_pcs">
+                                                            <img src="/home/images/half_dctr.png">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="glr_pcs">
+                                                            <img src="/home/images/half_dctr.png">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="glr_pcs">
+                                                            <img src="/home/images/half_dctr.png">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="glr_pcs">
+                                                            <img src="/home/images/half_dctr.png">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="glr_pcs">
+                                                            <img src="/home/images/half_dctr.png">
+                                                        </div>  
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end of panel -->
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-------------footer-section---------------->  
+        <div ng-include='"/home/templates/footer.html"'></div>
+
+        <!-- Angular Material Dependencies -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <!-- UI Router -->
+        <script src="https://cdn.jsdelivr.net/npm/angular-ui-router@0.4.3/release/angular-ui-router.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+
+        <!-- Angular Material -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+
+
+        <!-- Custom JS -->
+        <script src='/home/js/app.js'></script>
+        <script src='/home/js/controllers/user.js'></script>
+
+        <script src='/common/modules/users.js'></script>
+        <script src='/common/modules/hospitals.js'></script>
+        <script src='/common/modules/pages.js'></script>
+
+
+
+
+       <script type='text/javascript'>
+        var currentdata = <%- JSON.stringify(userdetail); %> ;  
+        app.run(function($rootScope) {
+            $rootScope.currentdatanew = currentdata;
+         
+        });  
+
+    </script>     
+
+
+    </body>
+</html>    

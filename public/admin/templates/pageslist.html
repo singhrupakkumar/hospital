@@ -1,0 +1,125 @@
+
+    <section class="content-header">
+        <h1>
+            Pages
+            <small>List</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Pages</a></li>
+            <li class="active">Payment List</li>
+        </ol>
+    </section>
+    <div class="form-group">
+<!--        <div class="alert alert-success" ng-show="del">
+            <strong ng-bind="del" ></strong> 
+        </div>-->
+    </div>
+
+
+        <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Pages List</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sr. no</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Created</th>
+                                    <th>Edit</th>
+                                    <th>View</th>
+                                 
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat='post in pages track by $index'>
+
+                                    <td ng-class="'{{post._id}}'">{{$index + 1}}</td>           
+                                    <td ng-class="'{{post._id}}'">{{post.title}}</td>     
+                                    <td ng-class="'{{post._id}}'" ng-bind-html="post.description"></td>   
+                                    <td ng-class="'{{post._id}}'">{{post.created_at | date}}</td>      
+                                    
+                                    <td ng-class="'{{post._id}}'">
+                                        <a ui-sref="editPage({paraml:post._id})">
+                                            <i class="fa fa-edit"></i>Edit</a>
+                                    </td>  
+
+                                    <td ng-class="'{{post._id}}'" ng-click='setActive(post)' style="cursor: pointer">
+
+                                        View
+                                    </td> 
+                                
+
+                                </tr>   
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <div class='col-sm-8 full-height'>
+                        <div ng-show="active">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">Single data</h3>
+
+
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body table-responsive no-padding">
+                                            <table class="table table-hover">
+                                                <tr>
+                                                    <th>Fields</th>
+                                                    <th>Data</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Title</td>
+                                                    <td>{{activePost.title}}</td>
+                                                </tr>
+                                                                                                <tr>
+                                                    <td>Description</td>
+                                                    <td ng-bind-html="activePost.description"></td>
+                                                </tr>
+                                                                                                <tr>
+                                                    <td>Type</td>
+                                                    <td>{{activePost.type}}</td>
+                                                </tr>
+                                                                                                <tr>
+                                           
+                                                
+                                             
+                                                
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body -->
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+  
