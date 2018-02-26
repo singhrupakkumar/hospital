@@ -1,0 +1,74 @@
+
+<section class="content-header">
+  
+    <h1>
+    Contact List    
+    <small></small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Contacts</li>
+    </ol>
+    
+   
+</section>
+    <div class="form-group">
+        <div class="alert alert-success" ng-show="del">  
+            <strong ng-bind="del" ></strong> 
+        </div>
+    </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Contacts List</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="contactlist" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr. no</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Message</th>
+                                    <th scope="col">Created</th>
+                                    <th scope="col">Status</th>
+                                    
+                                   
+                                </tr>
+                            </thead>   
+                            <tbody>
+
+                                <tr ng-repeat='user in contacts track by $index'>
+                                    <td ng-class="'{{user._id}}'">{{$index + 1}}</td>                                              
+                                    <td ng-class="'{{user._id}}'">{{user.name}}</td>
+                                    <td ng-class="'{{user._id}}'">{{user.email}} </td>
+                                    <td ng-class="'{{user._id}}'">{{user.subject}} </td>
+                                    <td ng-class="'{{user._id}}'">{{user.message}} </td>
+                                    
+                                    <td ng-class="'{{user._id}}'">{{user.created_at | date}}</td> 
+                                    <td ng-class="'{{user._id}}'" ng-if="user.status == '1'"><span style="cursor: pointer;" ng-click="marktoread(user._id,$index)" class="label label-danger">Not Answered</span></td>
+                                    <td ng-class="'{{user._id}}'" ng-if="user.status == '0'"><span style="cursor: pointer;" ng-click="marktoread(user._id,$index)" class="label label-success">Answered</span></td> 
+                                    
+                                    
+                                   
+                                </tr>                                
+                            </tbody> 
+                        </table>
+                    </div>
+                  
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>  

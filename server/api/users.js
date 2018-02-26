@@ -1,15 +1,19 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Ruapk
+ * @description User
+ * @type type
  */
 
  var User = require('../models/user');
+ var Contact = require('../models/contact');
+ var Review  = require('../models/review');
+ var Request = require('../models/request');
+ var Hospital = require('../models/hospital');
  var uuid = require('node-uuid');
  var fs = require('fs');
  var nodemailer = require("nodemailer");
  var smtpTransport = require("nodemailer-smtp-transport")
-
+var mongoose = require('mongoose');
  var smtpTransport = nodemailer.createTransport(smtpTransport({
  	host : "smtp.gmail.com",
  	secureConnection : false,
@@ -31,7 +35,33 @@ module.exports = function(apiRouter,passport,transporter,s3,randomString,userupl
     
  /*************************front website*****************************************/ 
       /*user register*/
-   apiRouter.post('/users/home', function(req, res) {   
+   apiRouter.post('/users/home', function(req, res) { 
+          if(!req.body.username){
+            var username = '';
+          }else{
+            var username = req.body.username;
+          }
+          
+          if(!req.body.phone){
+            var phone = '';
+          }else{
+            var phone = req.body.phone;
+          }
+          
+           if(!req.body.address){
+            var address = '';
+          }else{
+            var address = req.body.address;
+          }
+          
+          if(!req.body.address){ 
+            var address = '';
+          }else{
+            var address = req.body.address;
+          }
+
+          var email = req.body.email;
+       
 
         User.register(new User({
             username: req.body.username,
@@ -39,13 +69,27 @@ module.exports = function(apiRouter,passport,transporter,s3,randomString,userupl
             address: req.body.address,
             role:"1",
             email: req.body.email
-        }), req.body.password, function(err, user) { 
+        }), req.body.password, function(err, user) {   
             if (err) { 
                 console.error(err.message);
                 res.send(err.message);
             } else {
-                res.send("You have successfully registered!");
-            }
+                
+                        var mailOptions = {       
+                                                from: 'Kirk.mclaren@icloud.com',
+                                                to: 'Kirk.mclaren@icloud.com, rupak@avainfotech.com,diksha@avainfotech.com',
+                                                subject: 'New Hospital Registration',
+                                                html: '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Email Confirm</title><link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet"></head><body style="padding:15px 0; background: url(img/bgplait.png) repeat #dddddd; margin:0px auto; font-family: "Roboto", sans-serif; font-weight:400; background-size: 160px;"><div class="bg_style" style=" width:578px; height:660px; background:#fff;margin:0 auto;" ><table width="578" border="0" cellpadding="10" cellspacing="0" style="margin:0px auto; background:#fffefb; text-align:center;"><tr style="background:#fff;" ><td style="text-align:center; padding-top:10px; padding-bottom:10px; border-bottom:2px solid #00306b;"> <img src="https://s3.us-east-2.amazonaws.com/hospitalbuck/logo.png" alt="img" /></td></tr><table width="400" border="0" cellpadding="10" cellspacing="0" style="width:100%; background: #fffefb; text-align: center; box-shadow: none;"><tr><td align="center"><h2 style=" font-weight:500; margin-bottom:1px; font-size:18px; text-align:center;">New Hospital Registration</h2><h3 style=" font-weight:500; margin-bottom:1px; font-size:15px; padding:12px 0px 2px 0; margin-top:0;">Hello Admin, <br> A user named '+username+' has registered on the PerDIEMz application. Find below the details:</h3></td></tr></table><table width="95%" border="0" cellpadding="10" bgcolor="#f2f2f2" style="background-color:#f9f9f9; margin:0px auto;"><thead><tr><td style="border-bottom: 1px solid #ccc; padding: 10px 5px;" class="brdr_btmm" align="left" style="text-align:left;">Email Id:</td><td style="border-bottom: 1px solid #ccc; text-align: right; padding: 10px 7px;" class="brdr_btm1" align="left" style="text-align:right;">'+email+'</td></tr><tr><td style="border-bottom: 1px solid #ccc; padding: 10px 5px;" class="pay_sum" align="left" style="text-align:left;">Full Name :</td><td style="border-bottom: 1px solid #ccc; text-align: right; padding: 10px 7px;" class="brdr_btm" align="left" style="text-align:right;">'+username+'</td></tr></thead><tr><td style="border-bottom: 1px solid #ccc; padding: 10px 5px;" class="brdr_btmm1" align="left" style="text-align:left;">Phone :</td><td style="border-bottom: 1px solid #ccc; text-align: right; padding: 10px 7px;" class="brdr_btm" align="left" style="text-align:right;">'+phone+'</td></tr><tr><td style="border-bottom: 1px solid #ccc; padding: 10px 5px;" class="brdr_btmm" align="left" style="text-align:left;">Address :</td><td style="border-bottom: 1px solid #ccc; text-align: right; padding: 10px 7px;" class="brdr_btm1" align="left" style="text-align:right;">'+address+'</td></tr></table><tr><td align="center"><p style="color:#000; font-weight:500; text-align:center; margin: 45px 0px 0 0; font-size:14px;">Thank You,<br> Perdiemz</p></td></tr></table></div></body></html>'
+                                         };   
+                                         smtpTransport.sendMail(mailOptions, function(error, info) {
+                                                if (error) {
+                                                    
+                                                }
+                                         });   
+                
+                
+                res.send("Thanks for registering with PerDIEMZ. All your details has been sent to admin for review and they will contact you shortly!");
+            }  
 
         });
     });
@@ -88,22 +132,206 @@ apiRouter.post('/edituser', function(req, res) {
 	});
 });
 
+/**************************************My Hospital*************************************************************/
+
+apiRouter.post('/myhospitaldata', function(req, res) { 
+	 Hospital.aggregate(
+        [
+            {   
+                "$lookup":  
+                {
+                   "localField": "_id",
+                   "from": "reviews",
+                   "foreignField": "hospital_id",
+                   "as": "reviews_info"
+                }
+            },
+            {
+                $match:{
+                    "user_id":  mongoose.Types.ObjectId(req.body.user_id)
+                }
+            }
+        ]
+           , function(err, hospital) {   
+              	if (err)
+			res.send(err);
+                    
+                    
+             if (typeof hospital !== 'undefined' && hospital.length > 0) {
+             
+	
+  
+                
+               Request.aggregate(
+        [
+            {   
+                "$lookup":  
+                {
+                   "localField": "request_to",
+                   "from": "users",  
+                   "foreignField": "_id",
+                   "as": "staff_info"  
+                }
+            },
+            {
+                $match:{ 
+                    "hospital_id":  mongoose.Types.ObjectId(hospital[0]._id),
+                    "status":  0  
+                }
+            }
+        ]
+           , function(err, staff) {
+               
+                        var value1 = {
+                    data : hospital,  
+                    staff :staff,
+                }
+             
+               res.json({"message":"","error":"0","data" : value1});  
+               
+               
+           });
+            }else{
+               return res.json({ success : false,"error":"1", message : 'You have no any hospital' });
+            }    
+                 
+
+               
+	});
+});
+
+
+
+/**************************************Hospital Request*************************************************************/
+
+apiRouter.post('/requestlist', function(req, res) {    
+
+               Request.aggregate( 
+        [
+            {   
+                "$lookup":  
+                {
+                   "localField": "hospital_id",
+                   "from": "hospitals",  
+                   "foreignField": "_id",
+                   "as": "hospital_info"  
+                }
+            },
+            {
+                $match:{   
+                    "request_to":  mongoose.Types.ObjectId(req.body.user_id), 
+                    "status":  1 
+                }
+            }
+        ]
+           , function(err, staff) {  
+                 
+               if(err) {
+			res.json({"message":err.message,"error":"1"})
+		}else{
+                 res.json({"message":"","error":"0","data" : staff});       
+                }  
+      
+    
+	});
+});
+
+
+
+/**************************************Hospital Request Accept list*************************************************************/
+
+apiRouter.post('/request_accept_list', function(req, res) {    
+
+               Request.aggregate( 
+        [
+            {   
+                "$lookup":  
+                {
+                   "localField": "hospital_id",
+                   "from": "hospitals",  
+                   "foreignField": "_id",
+                   "as": "hospital_info"  
+                }
+            },
+            {
+                $match:{   
+                    "request_to":  mongoose.Types.ObjectId(req.body.user_id), 
+                    "status": 0     
+                }
+            }
+        ]
+           , function(err, staff) {  
+                 
+               if(err) {
+			res.json({"message":err.message,"error":"1"})
+		}else{
+                 res.json({"message":"","error":"0","data" : staff});       
+                }  
+      
+    
+	});
+});
+
+
+/**************************************Hospital Request accept*************************************************************/
+
+    apiRouter.post('/request_accept', function(req, res) { 
+        
+            Request.findById({'_id':req.body.req_id}, function(err, request) {
+          if (err)
+            res.send(err);
+
+            request.status = 0; 
+            request.save(function(err,update) {  
+            if (err)
+              res.send(err);
+              res.json({message:"You have successfully request accept",error:0,data:update});  
+          })
+
+        });
+
+    });
+    
+/**************************************Hospital Request reject*************************************************************/
+
+    apiRouter.post('/request_reject', function(req, res) {  
+        
+            Request.findById({'_id':req.body.req_id}, function(err, request) {
+          if (err)
+            res.send(err);
+
+            request.status = 2; 
+            request.save(function(err,update) {  
+            if (err)
+              res.send(err);
+              res.json({message:"Request Rejected",error:0,data:update});   
+          })
+
+        });
+
+    });    
+        
+   
+
 //***************************************************************************************************
 
-apiRouter.post('/users/register', function(req, res) {  
+apiRouter.post('/users/register', function(req, res) {    
 	User.register(new User({        
 		username: req.body.username,
 		email: req.body.email,     
 		role: 2,
-		type:req.body.type, 
-		complete_status:0,
+		type:req.body.type,
+                gender:req.body.gender,   
+                ssn:req.body.ssn,
+                address:req.body.address, 
+		complete_status:0,  
 		
 	}), req.body.password, function(err, user) {
 		if(err) {
 			res.json({"message":err.message,"error":"1"})
 		} else {
 			var userdata = {};    
-			userdata.id = user._id;
+			userdata.id = user._id; 
 			res.json({"message":"User Added Successfully","error":"0","data" : userdata});
 		}
 	});
@@ -144,7 +372,7 @@ apiRouter.post('/users/login', function(req, res, next) {
      } 
      
        if(user.status !='0'){ 
-     	return res.json({ success : false,"error":"1", message : 'You are not activated yet contact to administrator' });
+     	return res.json({ success : false,"error":"1", message : 'You have been registered with us successfully but your profile is still under review. Once your review is completed by admin you will be notified through email. Thanks for your patience!' });
      	}
      
      req.login(user, function(err){     
@@ -174,7 +402,7 @@ apiRouter.post('/users/weblogin', function(req, res, next) {
      	return res.json({ success : false,"error":"1", message : 'You are registered by app' });
      	}
         if(user.status !='0'){
-     	return res.json({ success : false,"error":"1", message : 'You are not activated yet contact to administrator' });
+     	return res.json({ success : false,"error":"1", message : 'You have been registered with us successfully but your profile is still under review. Once your review is completed by admin you will be notified through email. Thanks for your patience!' });
      	}  
      
      req.login(user, function(err){     
@@ -329,28 +557,28 @@ apiRouter.post('/allinoneexist', function(req, res) {
 
 
 
-apiRouter.post('/forgetpassword', function(req, res) { 
+apiRouter.post('/forgetpassword', function(req, res) {  
 
 User.findOne({ 'email': req.body.email }).select('+salt +hash').exec(function(err, user) {
 	if (user) {
                 host = req.get('host');//remember the server (i.e host) address
                  link = "http://" + req.get('host') + "/resetpassword?id=" + user.salt;//create a url of the host server
-                 var mailOptions = {
+                 var mailOptions = {  
                  	from: 'Kirk.mclaren@icloud.com',
                  	to: user.email,
                  	subject: 'Forgot Password',
-                 	html: "Hello " + user.email + ",<br> Please Click on the link to change password.<br><a href=" + link + ">Click here to Change Password</a>"
+                 	html: '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Forgot Password</title><link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet"></head><body style="padding:15px 0; background: url(img/bgplait.png) repeat #dddddd; margin:0px auto; font-family: "Roboto", sans-serif; font-weight:400; background-size: 160px;"><table width="600" border="0" cellpadding="10" cellspacing="0" style="margin:0px auto; background:#fffefb; text-align:center;"><tr style="background:#fff;" ><td style="text-align:center; padding-top:10px; padding-bottom:10px; border-bottom:2px solid #00306b;"><img src="https://s3.us-east-2.amazonaws.com/hospitalbuck/logo.png" alt="img" /></td></tr><tr><td align="center"><h2 style="text-align:center;">Hi, '+user.username+'</h2><h3 style="margin-top:0 ;font-weight: 600; font-size: 18px;">We received a forgot password request for your account.</h3><p>To reset your password, click here: </p></td></tr><tr><td align="center"><p style="color:#000; font-weight:500;"><a href="'+link+'">'+link+'</a></p></td></tr><tr><td align="center"><p style="color:#000; font-weight:500;">Thank You,<br> PerDIEMz</p></td></tr></table></body></html>'
                  };
                  smtpTransport.sendMail(mailOptions, function(error, info) {
                  	if (error) {
                  		console.log(error);
                  		res.json({"error" : 1 ,"message" : "Email has not been sent!",data:user});
                  	} else {
-                 		res.json({"error" : 0 ,"message" :"Email has been sent please check your email",data:user});
+                 		res.json({"error" : 0 ,"message" :"Password reset email has been sent to your registered email address.",data:user});
                  	}
                  });
              } else {
-             	res.json({"error" : 2 , "message" :"Email has not been registered!",data:user});
+             	res.json({"error" : 2 , "message" :"Enter the registered email address",data:user});
              }
 
          }); 
@@ -390,7 +618,7 @@ apiRouter.post('/editusrdetails', function(req, res) {
 			user.address_country= req.body.address_country,
 			user.charges= req.body.charges,			
 			user.complete_status= 1			
-			user.save(function(err) {
+			user.save(function(err) {  
 				if (err){
 					res.send({"error" : 1,"message" : "Unable to edit user"});
 				}
@@ -427,30 +655,29 @@ apiRouter.post('/editusrdetails', function(req, res) {
 });
 
 
-apiRouter.post('/changePassword', function(req, res){
-   
+apiRouter.post('/changePassword', function(req, res){  
+          var oldPassword = req.body.oldpassword;
+        if (req.body.newpassword !== req.body.cpassword) {
+            res.json({'message' : "Password and confirm password do not match.", 'status' : false, 'data' : "" });
+         }else{
 
-            User.findById({'_id': req.body.email }, {'hash': true, 'salt': true}, function(err, user) {
+            User.findById({'_id': req.body.path }, {'hash': true, 'salt': true}, function(err, user) {
 
 					
-			user.authenticate(req.body.password, function(err, authenticated) {
+			user.authenticate(oldPassword, function(err, authenticated) {
 
 			  if (!authenticated) {
-				res.json({'message' : "Invalid old password", 'error' : 1, 'data' : "" });
+				res.json({'message' : "Invalid old password", 'status' : false, 'data' : "" });
 			  }else{
 				user.setPassword(req.body.newpassword, function() {
-                                            user.save(function(err) {
-                                                
-                                                if(err) {  
-						res.json({"error" : 1 ,"message" : "Password can not be changed!"});
-                                                }
-                                                    res.json({'message' : "Password has been changed.", 'error' : 0, 'data' : "" });
-                                            });
+							user.save(function(err) {
+								res.json({'message' : "Password has been changed.", 'status' : true, 'data' : "" });
+							});
 				});  
 			  }
 			});	
            });
-  
+        }
     
 });
 
@@ -571,30 +798,105 @@ apiRouter.post('/profilepicupload', function(req, res) {
 });
 
 
-apiRouter.post('/editusrID', function(req, res) {        
+apiRouter.post('/editusrID', function(req, res) { 
+   
+    
 	User.findById({'_id': req.body.id}, function(err, user) {
 		if (err)
 			res.send(err);
+                    
+                if(req.body.role !='admin'){    
 		var role = 1;
 		if(req.body.role!=1){
 			role =2;
 		}
+               }else{
+                 var role = 'admin';    
+               }
+               
+                if(req.body.status == '0' && user.status == '1'){          
+                   
+                  var mailOptions = {       
+                    from: 'Kirk.mclaren@icloud.com',
+                    to: user.email ,
+                    subject: 'Account Activated',
+                    html: '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Email Confirm</title><link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet"></head><body style="padding:15px 0; background: url(img/bgplait.png) repeat #dddddd; margin:0px auto; font-family: "Roboto", sans-serif; font-weight:400; background-size: 160px;"><table width="600" border="0" cellpadding="10" cellspacing="0" style="margin:0px auto; background:#fffefb; text-align:center;"><tr style="background:#fff;" ><td style="text-align:center; padding-top:10px; padding-bottom:10px; border-bottom:2px solid #00306b;"><img src="https://s3.us-east-2.amazonaws.com/hospitalbuck/logo.png" alt="img" /></td></tr><tr><td align="center"><h2 style="text-align:center;">Hi, '+user.username+'</h2><h3 style="margin-top:0 ;font-weight: 600; font-size: 18px;">Congratulations! Your details have been approved by admin so you are on board with PerDIEMZ.</h3><p>You can now have full access to our website and enjoy our services.</p></td></tr><tr><td align="center"><p style="color:#000; font-weight:500;">Thank You,<br> PerDIEMz</p></td></tr></table></body></html>'
+             };   
+             smtpTransport.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+
+                    }
+    
+             }); 
+                
+                }
 
 		user.username = req.body.username; 
+                user.available_from = req.body.available_from;
+                 user.available_to = req.body.available_to;
+                user.available_status = req.body.available_status; 
+                user.awards = req.body.awards; 
+                user.address = req.body.address;
+                user.phone = req.body.phone; 
+                user.charges = req.body.charges; 
+                user.description = req.body.description; 
+                user.education = req.body.education; 
+                  
+                 user.shift = req.body.shift;
+                
 		user.dob = req.body.dob;
 		user.role = role;
 		user.type = req.body.role;             
 		user.status = req.body.status;
 
+
 		user.save(function(err) {
 			if (err)
 				res.send(err);
-			res.json('User updated!');
+                     setTimeout(function(){ res.json('User updated!');}, 2000);         
+			
 		})
 
 	});
 });
 
+
+    /*************save physical status***************/
+
+    apiRouter.post('/userphysicalinfo', function(req, res) {   
+
+        User.findById({'_id': req.body.user_id}, function(err, user) { 
+            if (err)
+                res.send(err);  
+         if(user == null){ 
+         return res.json({'message' : "User not exist", 'error' : 1,data:''});  
+            }    
+        user.userphysicalinfo.push({"prev_physical":req.body.prev_physical,
+                        "phy_date": req.body.phy_date,
+                        "phy_copy": req.body.phy_copy,
+                        "tb_test": req.body.tb_test,
+                        "tb_date": req.body.tb_date,
+                        "tb_copy": req.body.tb_copy,
+                        "cpr_cer": req.body.cpr_cer,
+                        "cpr_exp_date": req.body.cpr_exp_date,
+                        "cpr_card": req.body.cpr_card,
+                        "nursing_lic": req.body.nursing_lic,
+                        "nur_lic_exp": req.body.nur_lic_exp,
+                        "fmlycre_reg": req.body.fmlycre_reg,
+                        "drug_screen": req.body.drug_screen});
+            
+            user.save(function(err,users) {  
+                if (err)
+                    res.send(err); 
+                res.json({'message' : "Physical info save successfully", 'error' : 0,data:users});    
+              
+            })
+            
+          
+            
+
+        });
+    });
 
 
  /*************edit profile***************/
@@ -632,7 +934,7 @@ apiRouter.post('/docupload', function(req, res) {
      
 	if(req.body.user_id == null)
 	{
-		res.json({'message' : "No user available", 'error' : 1});
+		res.json({'message' : "No user available", 'error' : 1});  
 		return false;
 	}
 
@@ -750,6 +1052,120 @@ apiRouter.post('/removedoc', function(req, res) {
       res.json(users);
     });
   });
+  
+  
+  
+/****************App contact list**********************/
+  
+    apiRouter.get('/contactall', function(req, res) {
+    Contact.find({}, function(err, contact) {  
+      if (err)
+        res.send(err);
+      res.json(contact);
+    });
+  });
+  
+  
+/****************App Review list**********************/
+  
+    apiRouter.get('/reviewall', function(req, res) {
+        
+    Review.aggregate(  
+        [
+            { 
+             "$lookup":
+             {
+                "localField": "hospital_id",
+                   "from": "hospitals",
+                   "foreignField": "_id",
+                   "as": "hospital_info"
+             }
+             },
+                {
+                    $unwind: "$hospital_info"
+                },
+            { 
+             "$lookup":
+             {
+               "localField": "user_id",
+                   "from": "users",
+                   "foreignField": "_id",
+                   "as": "user_info"
+             }
+             },
+                {
+                    $unwind: "$user_info"
+                },
+                    
+        ]    
+          , function(err, review) {    
+      if (err)
+        res.send(err);
+      res.json(review);   
+    });
+  });  
+  
+  
+  /********************mail send********************/
+  
+  apiRouter.post('/mailsend', function(req, res) {
+         
+	if(req.body.emailto == null)
+	{
+		res.json({'message' : "Email Id required", 'error' : 1});
+		return false;
+	}else{
+            var mailOptions = {       
+                    from: 'Kirk.mclaren@icloud.com',
+                    to: req.body.emailto ,
+                    subject: req.body.subject ,
+                    html: '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Email Confirm</title><link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet"></head><body style="padding:15px 0; background: url(img/bgplait.png) repeat #dddddd; margin:0px auto; font-family: "Roboto", sans-serif; font-weight:400; background-size: 160px;"><div class="bg_style" style=" width:578px; height:660px; background:#fff;margin:0 auto;" ><table width="578" border="0" cellpadding="10" cellspacing="0" style="margin:0px auto; background:#fffefb; text-align:center;"><tr style="background:#fff;" ><td style="text-align:center; padding-top:10px; padding-bottom:10px; border-bottom:2px solid #00306b;"> <img src="https://s3.us-east-2.amazonaws.com/hospitalbuck/logo.png" alt="img" /></td></tr><table width="400" border="0" cellpadding="10" cellspacing="0" style="width:100%; background: #fffefb; text-align: center; box-shadow: none;"><tr><td align="center"><h2 style=" font-weight:500; margin-bottom:1px; font-size:18px; text-align:center;">Admin Contact</h2><h3 style=" font-weight:500; margin-bottom:1px; font-size:15px; padding:12px 0px 2px 0; margin-top:0;">Hello '+req.body.emailto+', <br>  '+req.body.message+' </h3></td></tr></table><tr><td align="center"><p style="color:#000; font-weight:500; text-align:center; margin: 45px 0px 0 0; font-size:14px;">Thank You,<br> Perdiemz</p></td></tr></table></div></body></html>'
+             };   
+             smtpTransport.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+
+                    }
+                    
+                 res.json({'message' : "Mail Sent", 'error' : 0});   
+             });        
+        }
+
+});
+
+/********************Dashboard********************/
+  
+  apiRouter.get('/dashboard', function(req, res) {   
+ 
+    User.find({}, function(err, users) {    
+        if(err){
+          return  res.json({'message' : "something wrong.", 'status' : false, 'data' : "" });  
+        }
+       Hospital.find({}, function(err, hospital) {    
+       
+       res.json({'message' : "", 'status' : true, 'data' : users,'hospital':hospital });    
+       });
+ 	
+    });
+
+  });
+  
+ /********************Contact mark to read********************/
+  
+  apiRouter.post('/contactmarktoread', function(req, res) {
+   
+     Contact.findById({'_id': req.body.id}, function(err, contact) { 
+      if (err)
+        res.send(err);
+      contact.status = 0; 
+    contact.save(function(err,update) {  
+    if (err)
+      res.send(err);
+      res.json({message:"Successfully Marked",error:0,data:update});  
+     })
+
+    });  
+
+   });  
 
 
 }      

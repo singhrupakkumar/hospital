@@ -2,8 +2,9 @@
 var User = require('./models/user'),
         LocalStrategy = require('passport-local').Strategy,
         FacebookStrategy = require('passport-facebook').Strategy,
-        GoogleStrategy  = require('passport-google-oauth2').Strategy,
-        configAuth = require('./auth');
+        GoogleStrategy  = require('passport-google-oauth').OAuth2Strategy, 
+        TwitterStrategy = require('passport-twitter').Strategy,
+        configAuth = require('./auth'); 
 
 
 
@@ -27,8 +28,16 @@ module.exports = function(passport) {
 
     // facebook will send back the token and profile
     function(token, refreshToken, profile, done) {
-        //console.log(profile);
+              
+      if (typeof localStorage === "undefined" || localStorage === null) {
+        var LocalStorage = require('node-localstorage').LocalStorage;
+        localStorage = new LocalStorage('./scratch');
+      }  
 
+
+    var objjj = JSON.stringify(profile);  
+    
+    localStorage.setItem('socialprofile', objjj);   
         // asynchronous
         process.nextTick(function() {
 
@@ -63,8 +72,8 @@ module.exports = function(passport) {
                     newUser.username  = profile.displayName; // look at the passport user profile to see how names are returned
                     newUser.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
                     newUser.image =  profile.photos[0].value;
-                    newUser.role="user";
-                    newUser.status="1";
+                    newUser.role="1";
+                    newUser.status="0";
                    
                     //console.log(newUser);
                     //console.log("add new user");
@@ -87,51 +96,122 @@ module.exports = function(passport) {
 
     }));
     
-//    passport.use(new GoogleStrategy({
-//        clientID        : configAuth.googleAuth.clientID,
-//        clientSecret    : configAuth.googleAuth.clientSecret,
-//        callbackURL     : configAuth.googleAuth.callbackURL,
-//        passReqToCallback   : true,
-//    },
-//    function(request,token, refreshToken, profile, done) {
-//          console.log(profile.photos[0].value);
-//        // make the code asynchronous
-//        // User.findOne won't fire until we have all our data back from Google
-//        process.nextTick(function() {
-//
-//            // try to find the user based on their google id
-//            User.findOne({ 'email' : profile.emails[0].value }, function(err, user) {
-//                if (err)
-//                    return done(err);
-//
-//                if (user) {
-//
-//                    // if a user is found, log them in
-//                    return done(null, user);
-//                } else {
-//                    // if the user isnt in our database, create a new user
-//                    var newUser          = new User();
-//
-//                    // set all of the relevant information
-//                    newUser.google_id    = profile.id;
-//                    newUser.google_token = token;
-//                    newUser.firstname  = profile.displayName;
-//                    newUser.email = profile.emails[0].value; // pull the first email
-//                    newUser.role="user";
-//                    var img=profile.photos[0].value;
-//                    var fimg= img.replace(/sz=50/gi,'sz=500');
-//                    newUser.profilepic=fimg;
-//                    newUser.status="1";
-//
-//                    // save the user
-//                    newUser.save(function(err) {
-//                        if (err)
-//                            throw err;
-//                        return done(null, newUser);
-//                    });
-//                }
-//            });
-//        });
-//
-//    }));
+    passport.use(new GoogleStrategy({  
+        clientID        : configAuth.googleAuth.clientID,
+        clientSecret    : configAuth.googleAuth.clientSecret,
+        callbackURL     : configAuth.googleAuth.callbackURL,
+        passReqToCallback   : true,
+    },
+    function(request,token, refreshToken, profile, done) {
+          
+      if (typeof localStorage === "undefined" || localStorage === null) {
+        var LocalStorage = require('node-localstorage').LocalStorage;
+        localStorage = new LocalStorage('./scratch');
+      }  
+
+
+    var objjj = JSON.stringify(profile);  
+    
+    localStorage.setItem('socialprofile', objjj);
+    
+        process.nextTick(function() {
+
+            // try to find the user based on their google id
+            User.findOne({ 'email' : profile.emails[0].value }, function(err, user) {
+                if (err)
+                    return done(err);
+
+                if (user) {
+
+                    // if a user is found, log them in
+                    return done(null, user);
+                } else {
+                    // if the user isnt in our database, create a new user
+                    var newUser          = new User();
+
+                    // set all of the relevant information
+                    newUser.google_id    = profile.id;
+                    newUser.google_token = token;
+                    newUser.username  = profile.displayName;
+                    newUser.email = profile.emails[0].value; // pull the first email
+                    newUser.role="1";
+                    var img = profile.photos[0].value;
+                    var fimg= img.replace(/sz=50/gi,'sz=500');
+                    newUser.image= fimg;
+                    newUser.status="1";
+
+                    // save the user
+                    newUser.save(function(err) {
+                        if (err)
+                            throw err;
+                        return done(null, newUser);
+                    });
+                }
+            });
+        });
+
+    }));
+    
+    /********************Twitter login************************/
+    
+    passport.use(new TwitterStrategy({  
+    consumerKey:  configAuth.twitterAuth.consumerKey,
+    consumerSecret:configAuth.twitterAuth.consumerSecret,
+    callbackURL: configAuth.twitterAuth.callbackURL
+  },
+  function(token, tokenSecret, profile, done) {
+      
+      
+      if (typeof localStorage === "undefined" || localStorage === null) {
+        var LocalStorage = require('node-localstorage').LocalStorage;
+        localStorage = new LocalStorage('./scratch');
+      }  
+
+
+    var objjj = JSON.stringify(profile);  
+    
+    localStorage.setItem('socialprofile', objjj);
+     //  console.log(JSON.parse(localStorage.getItem('socialprofile')))  
+             
+        
+        process.nextTick(function() {
+            User.findOne({ 'username' : profile.username }, function(err, user) {
+                if (err)
+                    return done(err);
+
+                if (user) {
+                    return done(null, user);      
+                } else {     
+                //  return done(null, user);   
+                    
+                   //  if the user isnt in our database, create a new user
+                    var newUser          = new User();
+                    newUser.twitter_id    = profile.id;
+                    newUser.username  = profile.displayName;
+                    
+                    if(profile.emails[0].value){ 
+                          newUser.email = profile.emails[0].value;
+                    }else{
+                       newUser.email = profile.username; // pull the first email   
+                    }
+                  
+                    newUser.role="1";
+               
+                    newUser.status="1";
+
+                    // save the user
+                    newUser.save(function(err) {
+                        if (err)
+                            throw err;
+                        return done(null, newUser);
+                    });
+                }
+            }); 
+        });
+
+  }
+));
+    
+    
+    
 };

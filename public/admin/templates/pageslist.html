@@ -1,24 +1,24 @@
 
-    <section class="content-header">
-        <h1>
-            Pages
-            <small>List</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Pages</a></li>
-            <li class="active">Payment List</li>
-        </ol>
-    </section>
+<section class="content-header">
+  
+    <h1>
+    Pages   
+    <small></small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Pages List</li>
+    </ol>
+    
+   
+</section>
     <div class="form-group">
-<!--        <div class="alert alert-success" ng-show="del">
+        <div class="alert alert-success" ng-show="del">  
             <strong ng-bind="del" ></strong> 
-        </div>-->
+        </div>
     </div>
-
-
-        <!-- Main content -->
-    <section class="content">
+ <section class="content">
         <div class="row">
             <div class="col-xs-12">
 
@@ -29,16 +29,15 @@
                         <h3 class="box-title">Pages List</h3>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="box-body" ng-show="!active">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Sr. no</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Created</th>
-                                    <th>Edit</th>
-                                    <th>View</th>
+                                    <th scope="col">Sr. no</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Created</th>
+                                    <th scope="col" class="actions">Actions</th>
                                  
                                 </tr>
                             </thead>
@@ -50,17 +49,14 @@
                                     <td ng-class="'{{post._id}}'">{{post.title}}</td>     
                                     <td ng-class="'{{post._id}}'" ng-bind-html="post.description"></td>   
                                     <td ng-class="'{{post._id}}'">{{post.created_at | date}}</td>      
-                                    
-                                    <td ng-class="'{{post._id}}'">
-                                        <a ui-sref="editPage({paraml:post._id})">
-                                            <i class="fa fa-edit"></i>Edit</a>
-                                    </td>  
+       
+                                   <td class="actions {{post._id}}">
+                                      <a href="javascript:void(0)" ng-click='setActive(post)' style="cursor: pointer"  title="View" class="btn btn-info btn-xs {{post._id}}"><span class="fa fa-eye"></span><span class="sr-only">View</span></a> 
 
-                                    <td ng-class="'{{post._id}}'" ng-click='setActive(post)' style="cursor: pointer">
+                                      <a ui-sref="editPage({paraml:post._id})" title="Edit" class="btn btn-success btn-xs"><span class="fa fa-pencil"></span><span class="sr-only">Edit</span></a> 
 
-                                        View
-                                    </td> 
-                                
+                                      
+                                  </td> 
 
                                 </tr>   
 
@@ -77,10 +73,10 @@
                                     <div class="box">
                                         <div class="box-header">
                                             <h3 class="box-title">Single data</h3>
-
+                                               <a class="pull-right" id="mybutton"  ng-click="listShow(active)">Back</a>
 
                                         </div>
-                                        <!-- /.box-header -->
+                                        <!-- /.box-header --> 
                                         <div class="box-body table-responsive no-padding">
                                             <table class="table table-hover">
                                                 <tr>
@@ -121,5 +117,4 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
-    </section>
-  
+    </section>  

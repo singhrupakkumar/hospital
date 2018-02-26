@@ -77,7 +77,13 @@
 <script src='/common/modules/pages.js'></script>
 
 <script src='/home/js/controllers/page.js'></script> 
-
+  <script type='text/javascript'>
+                        var currentUser = <%- JSON.stringify(user); %> ;
+        app.run(function($rootScope) {
+                                $rootScope.currentUser = currentUser;
+                        console.log($rootScope.currentUser);
+        });
+        </script>  
 
 
 

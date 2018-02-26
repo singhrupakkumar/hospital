@@ -35,7 +35,7 @@
             <img src="/home/images/dctr_bnr.jpg">  
 
             <div class="sign_bner">
-                <h3>Doctor profile</h3>
+                <h3>Staff List</h3>
             </div>
         </div>
         <!-----------doctor_profile_section----------->
@@ -324,7 +324,7 @@
                               <div class="left_lgn">
                                 <div class="pic_usr">
                                 <img ng-show="list.image" ng-src="{{list.image}}">
-                                <img ng-show="!list.image" ng-src="/home/images/pplr_usr.jpg">
+                                <img ng-show="!list.image" ng-src="/home/images/noimage.png">
                                   </div>
                                     </div> 
                                     <a href="/userdetails?id={{list._id}}"  class="btn btn-primary ble_stl">View Profile</a>
@@ -354,7 +354,7 @@
                                             
                                        <div class="snd_grph">
                                        <p>{{list.description}}</p>  
-                                       <button type="button" class="btn btn-primary ble_stl">Send Request</button>
+                                        <button type="button" ng-click="send_request($event,list._id)" id="{{list._id}}" class="btn btn-primary ble_stl">Send Request</button>
                                         </div>
                                             
                                         

@@ -82,7 +82,36 @@ var adminApp = angular.module('fwrk.admin', [
 			url: '/editUser/:id',
 			templateUrl: '/admin/templates/editUser.html',
 			controller: 'EditUsersCtrl'
+		})
+                .state('changePassword', {  
+			url: '/changePassword/:id',
+			templateUrl: '/admin/templates/changePassword.html',
+			controller: 'ChangePasswordCtrl'
+		})          
+                .state('contactlist', {
+			url: '/contactlist',
+			templateUrl: '/admin/templates/contactList.html',
+			resolve: {
+				contactList: function(Users){ 
+					return Users.contactall().then(function(data){
+						return data;
+					});
+				}
+			},
+			controller: 'contactListCtrl'
+		}).state('reviewlist', {
+			url: '/reviewlist', 
+			templateUrl: '/admin/templates/reviewList.html',
+			resolve: {  
+				reviewList: function(Users){ 
+					return Users.reviewall().then(function(data){
+						return data;  
+					});
+				}
+			},
+			controller: 'reviewListCtrl'    
 		});
+                
 		
 		
 	}).directive('fileModel', ['$parse', function ($parse) { 

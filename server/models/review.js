@@ -4,8 +4,8 @@ var reviewSchema = new mongoose.Schema({
     hospital_id: { type: mongoose.Schema.Types.ObjectId, required: '{PATH} is required!'},
     user_id: { type: mongoose.Schema.Types.ObjectId, required: '{PATH} is required!'},
 	status:{type:Number,default : 0},
-        image:{type:String},     
-        text:{type:String,default:"It's really awesome!!!!"},   
+        image:{type:String},      
+        text:{type:String},        
         rating:{type:Number,default : 0}, 
 	created_at: { type: Date, default: Date.now },
 	updated_at: { type: Date, default: Date.now }

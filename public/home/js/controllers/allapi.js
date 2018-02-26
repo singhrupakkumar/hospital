@@ -9,9 +9,9 @@ app.controller('allapiCtr', function($scope,$rootScope) {
     
     var base_url = window.location.origin+'/api';
     
-    response.push({'descripiton':'User Register Api','url':base_url+'/users/register','parameter':'username:rakesh email:kumar@mail.com type:Doctor/Nurse/Helper password:123456'});
+    response.push({'descripiton':'User Register Api','url':base_url+'/users/register','parameter':'username:rakesh email:kumar@mail.com type:Doctor/Nurse/Helper password:123456 ,gender:male ,ssn:ffff ,address:candigarh  '});
 
-    response.push({'descripiton':'User Login Api','url':base_url+'/users/login','parameter':'email:kumar@mail.com password:123456'});
+    response.push({'descripiton':'User Login Api','url':base_url+'/users/login','parameter':'email:kumar@mail.com password:123456'});  
 
     response.push({'descripiton':'Get User Detail By id','url':base_url+'/users/userdetailbyid','parameter':'id:5a4f26a96de90e11a447f69cd'});
 
@@ -58,8 +58,14 @@ app.controller('allapiCtr', function($scope,$rootScope) {
     response.push({'descripiton':'Favorite List','url':base_url+'/favorite/list','parameter':'user_id:5a71a7882a00eb126c90142a'}); 
     
      response.push({'descripiton':'Add Review','url':base_url+'/reviews/add','parameter':'user_id:5a681f3d7b582555822caa14, hospital_id:5a7ae00e75c22515db05aac2,text:Its really awesome!!!!,rating:5'});
+     response.push({'descripiton':'Request List','url':base_url+'/requestlist','parameter':'user_id:5a681f3d7b582555822caa14'});
+     response.push({'descripiton':'Request Accept','url':base_url+'/request_accept','parameter':'req_id:5a82f192a3f069100c27f8f4'});
+     response.push({'descripiton':'Request Reject','url':base_url+'/request_reject','parameter':'req_id:5a82f192a3f069100c27f8f4'});
+     
+     response.push({'descripiton':'Request Accept list','url':base_url+'/request_accept_list','parameter':'user_id:5a681f3d7b582555822caa14'});
+     response.push({'descripiton':'User physicalinfo','url':base_url+'/userphysicalinfo','parameter':'user_id:5a8e7422ba3fbb4700539ebe prev_physical:N phy_date:2018-02-22 phy_copy:Y tb_test:Y tb_date:2018-02-22 tb_copy:N cpr_cer:N cpr_exp_date:2018-02-22 cpr_card:Y nursing_lic:Y nur_lic_exp:N fmlycre_reg:Y drug_screen:N'});
     
-    $scope.base_url = base_url;  
+    $scope.base_url = base_url;    
    
     $scope.data = response;
 

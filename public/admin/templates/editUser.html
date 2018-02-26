@@ -34,7 +34,7 @@
                   
                          <div class='form-group'>
                              <label for="exampleInputPassword1">Role</label>    
-                            <select name="role" class="form-control" ng-model='user.role' required="required">    
+                            <select name="role" class="form-control" ng-model='user.role' required="required" disabled>    
                                 <option  ng-selected="user.role=='admin'" value="1">Hospital Admin</option>
                                 <option  ng-selected="user.type=='Doctor'"  value="Doctor">Doctor</option>
                                 <option  ng-selected="user.type=='Nurse'"  value="Nurse">Nurse</option>
@@ -42,7 +42,39 @@
 
                             </select>
                              
-                                </div>
+                         </div>
+                      
+                        <div class="form-group">
+                             <label for="exampleInputPhone">Phone</label>    
+                            <input id="phone" type="number" class="form-control" required="required"  name="phone" ng-model='user.phone' value="{{user.phone}}" placeholder="Phone Number">
+                        </div>
+                      
+                        <div class="form-group">
+                            <label for="exampleInputaddress">Address</label>
+                            <input id="address" type="text" class="form-control" required="required" name="address" ng-model='user.address' placeholder="Address">
+                        </div>
+                      
+                        <div class="form-group" ng-show="user.role == '2'">
+                            <label for="exampleInputaddress">Available To</label>
+                            <input id="available_to" type="text" class="form-control" required="required" name="available_to" ng-model='user.available_to' placeholder="Available To">
+                        </div>
+                      
+                        <div class="form-group" ng-show="user.role == '2'"> 
+                            <label for="exampleInputaddress">Description</label>
+                            <trix-editor angular-trix ng-model='user.description' class="trix-content"></trix-editor>
+                        </div>
+                      
+                        <div class="form-group" ng-show="user.role == '2'">
+                            <label for="exampleInputaddress">Available From</label>
+                            <input id="available_from" type="text" class="form-control" required="required" name="available_from" ng-model='user.available_from' placeholder="Available From">
+                        </div>
+                         <div class='form-group'>
+                             <label for="exampleInputCountry">Country</label>    
+                              <select ng-model="user.address_country" name="address_country" class="form-control bdr-non">
+                                                               <option ng-repeat="country in country" value="{{country.name}}" > {{country.name}}</option>
+                             </select> 
+                             
+                         </div>
                             <div class='form-group'>
                                  <label for="exampleInputPassword1">Status</label>  
                                     <select name="status" class="form-control" ng-model='user.status' required="">     

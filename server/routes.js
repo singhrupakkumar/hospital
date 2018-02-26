@@ -1,7 +1,7 @@
 var express = require('express'),
 path = require('path'),
 User = require('./models/user'),
-Availability = require('./models/availability'),
+Availability = require('./models/availability'),  
 Hospital = require('./models/hospital'),
 Contact = require('./models/contact'),
 Page = require('./models/page'),
@@ -17,7 +17,9 @@ sr = require('simple-random'),
 serialize = require('node-serialize'),
 Hospital = require('./models/hospital'),
 Favorite = require('./models/favorite'),  
-Review = require('./models/review'),  
+Review = require('./models/review'), 
+Request = require('./models/request'),
+Resume = require('./models/resume'),    
 randomString = sr();
 var transporter = nodemailer.createTransport({
     host: 'email-smtp.us-east-1.amazonaws.com',
@@ -29,7 +31,7 @@ var transporter = nodemailer.createTransport({
 });
 
 aws.config.update({    
-    secretAccessKey: 'iuDBe2S70cHGWDV5QtbhUhmUfqwxcmBDmP1908J0', 
+    secretAccessKey: 'iuDBe2S70cHGWDV5QtbhUhmUfqwxcmBDmP1908J0',  
     accessKeyId: 'AKIAJIW2ZI5CHDJU7X4A'
 });    
 
@@ -72,7 +74,10 @@ module.exports = function(app, passport) {
     require('./api/contacts')(apiRouter);
     require('./api/pages')(apiRouter);
     require('./api/favorite')(apiRouter);
-    require('./api/reviews')(apiRouter);      
+    require('./api/reviews')(apiRouter); 
+    require('./api/requests')(apiRouter);
+    
+    require('./api/resumes')(apiRouter);
 
 
     // home route
@@ -138,20 +143,43 @@ module.exports = function(app, passport) {
         
         
         
-     router.get('/privacyandpolicy', function(req, res) {     
-        res.render('home/privacyandpolicy');    
+     router.get('/privacyandpolicy', function(req, res) {
+         
+                 if (req.isAuthenticated()) {  
+         res.render('home/privacyandpolicy',{user: req.user});  
+        } else {  
+            res.render('home/privacyandpolicy',{user:''});
+        }  
     });
 
-    router.get('/aboutus', function(req, res) {     
-        res.render('home/aboutus');    
+    router.get('/aboutus', function(req, res) {
+        
+          if (req.isAuthenticated()) {  
+         res.render('home/aboutus',{user: req.user});  
+        } else {  
+            res.render('home/aboutus',{user:''});
+        } 
+        
     });
 
-     router.get('/terms', function(req, res) {     
-        res.render('home/terms');    
+     router.get('/terms', function(req, res) {
+         
+         if (req.isAuthenticated()) {  
+         res.render('home/terms',{user: req.user});  
+        } else {  
+            res.render('home/terms',{user:''});
+        }  
+           
     });
 
-    router.get('/contact', function(req, res) {     
-        res.render('home/contact');    
+    router.get('/contact', function(req, res) {
+        
+        
+    if (req.isAuthenticated()) {  
+         res.render('home/contact',{user: req.user});  
+     } else {  
+         res.render('home/contact',{user:''});
+     }  
     });
 
 
@@ -179,7 +207,7 @@ module.exports = function(app, passport) {
             } else { 
                 res.render('home/userdetails', {userdetail: user});
             }
-        });
+        }); 
     });
     
     
@@ -188,6 +216,16 @@ module.exports = function(app, passport) {
          res.render('home/allappuser',{user: req.user});  
      } else {  
          res.render('home/allappuser',{user:''});
+     }   
+     });
+     
+     
+     
+      router.get('/home/myhospital', function(req, res) {   
+       if (req.isAuthenticated()) {  
+         res.render('home/myhospital',{user: req.user});  
+     } else {  
+         res.render('home/login',{user:''});
      }   
      });
     
@@ -257,8 +295,27 @@ module.exports = function(app, passport) {
             failureRedirect: '/login'
         }));
 
-
-   
+    /*************google login****************/    
+     router.get('/auth/google', passport.authenticate('google', {scope: [  
+            'https://www.googleapis.com/auth/plus.login',
+            'https://www.googleapis.com/auth/plus.profile.emails.read']
+    }));  
+  //  router.get('/auth/google', passport.authenticate('google', {scope: ['email']}));     
+    router.get('/auth/google/callback',
+        passport.authenticate('google', {  
+            successRedirect: '/',
+            failureRedirect: '/login'
+        }));  
+        
+        
+    /*************twitter login****************/  
+    
+    router.get('/auth/twitter', passport.authenticate('twitter', {scope: ['email']}));     
+    router.get('/auth/twitter/callback',
+        passport.authenticate('twitter', {   
+            successRedirect: '/',
+            failureRedirect: '/login'  
+        }));    
    
     router.get('/admin/resetpassword', function(req, res) {
         //res.render('home/forgetpassword');

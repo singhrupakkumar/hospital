@@ -16,20 +16,32 @@ module.exports = function(apiRouter,serialize){
           var reviewsave = new Review();
 
         reviewsave.hospital_id = req.body.hospital_id;
-        reviewsave.user_id = req.body.user_id;  
+        reviewsave.user_id = req.body.user_id; 
+        reviewsave.text = req.body.text; 
+         reviewsave.rating = req.body.rating;
 
           Review.findOne({$and:[{"hospital_id":req.body.hospital_id},{"user_id":req.body.user_id}]}, function (err, revi) {
             if(revi == null){
+             
+                
              User.findById({'_id': req.body.user_id}, function(err, user) {
-                reviewsave.image = user.image;   
+                 
+           
+               if(user != null){
+                 reviewsave.image = user.image;   
+               } else{
+                   reviewsave.image = '';  
+               }  
+                  
               })  
+             
               reviewsave.save(function(err, rate){                
             if(err) res.json({error : 1, message: 'Something went wrong. Try Again!'});
-              Hospital.findById({'_id': req.body.hospital_id}, function(err, hos) {
+              Hospital.findById({'_id': req.body.hospital_id}, function(err, hos) {     
               
-                 hos.avg_rating = req.body.avgrate; 
+                 hos.avg_rating = req.body.avgrate;   
               hos.save(function(err, post) { 
-                res.json({error : 0 , data : rate , status:'0',message: ' Review save Successfully!'});  
+                setTimeout(function(){ res.json({error : 0 , data : rate , status:'0',message: ' Review save Successfully!'}); }, 3000);     
              });
               }) 
               

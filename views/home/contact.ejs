@@ -76,7 +76,7 @@
       <form role="form" ng-submit="sendcontat()">
         <div class="col-sm-6">
           <div class="input-group txt_zip"> 
-          <input id="email" type="text" class="form-control ctrl_smn"  name='name' ng-model='user.name' required placeholder="Name">
+          <input id="email" type="text" class="form-control ctrl_smn fx_algn"  name='name' ng-model='user.name' required placeholder="Name">
          </div>
        </div>
 
@@ -88,13 +88,13 @@
 
      <div class="col-sm-6">
       <div class="input-group txt_zip">
-       <input id="email" type="text" class="form-control ctrl_smn"  name='phone' ng-model='user.phone' required placeholder="Phone">
+       <input id="email" type="text" class="form-control ctrl_smn fx_algn"  name='phone' ng-model='user.phone' required placeholder="Phone">
      </div>
    </div>
 
    <div class="col-sm-6">
     <div class="input-group txt_zip">
-      <input id="email" type="text" class="form-control ctrl_smn"  name='subject' ng-model='user.subject' required placeholder="Subject">
+      <input id="email" type="text" class="form-control ctrl_smn fx_algn"  name='subject' ng-model='user.subject' required placeholder="Subject">
     </div>
   </div>
 
@@ -104,7 +104,7 @@
    </div>
  </div>
 
- <input type="submit" class="btn btn-primary ble_stl shrt_lft" value="Done">
+ <input type="submit" class="btn btn-primary cntr_zpp" value="Done">
 </form>
 </div>
 </div>
@@ -135,7 +135,13 @@
 <script src='/home/js/controllers/page.js'></script> 
 
 
-
+   <script type='text/javascript'>
+                        var currentUser = <%- JSON.stringify(user); %> ;
+        app.run(function($rootScope) {
+                                $rootScope.currentUser = currentUser;
+                        console.log($rootScope.currentUser);
+        });
+        </script>  
 
 
 </body>

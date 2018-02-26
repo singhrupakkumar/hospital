@@ -49,7 +49,9 @@
                                     <img src="/home/images/dshbrd_bner.jpg">
                                 </div>
                                 <div class="usr_brd">
-                                    <img src="{{currentUser.image}}"> 
+
+                                      <img ng-show="currentUser.image" ng-src="{{currentUser.image}}" > 
+                                      <img ng-show="!currentUser.image" ng-src="/home/images/noimage.png">
 
                                 </div>
 
@@ -101,14 +103,14 @@
                                     <div class="nme_profle">
                                         <div class="brdr_mtng">
                                             <div class="col-sm-6"> 
-                                                <div class="lft_wlcm">
+                                                <div class="lft_wlcm" ng-show="currentUser.username">
                                                     <span>Name:</span>
                                                     <h3>{{currentUser.username}}</h3>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <div class="lft_wlcm">
+                                                <div class="lft_wlcm" ng-show="currentUser.phone">
                                                     <span>Contact Number:</span>
                                                     <h3>{{currentUser.phone}}</h3>
                                                 </div>
@@ -116,14 +118,14 @@
                                         </div>
                                         <div class="brdr_mtng">
                                             <div class="col-sm-6">
-                                                <div class="lft_wlcm">
+                                                <div class="lft_wlcm" ng-show="currentUser.address">
                                                     <span>Address:</span>
                                                     <h3>{{currentUser.address}}</h3>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <div class="lft_wlcm">
+                                                <div class="lft_wlcm" ng-show="currentUser.address_country">
                                                     <span>Country:</span>
                                                     <h3>{{currentUser.address_country}}</h3>
                                                 </div>
@@ -131,15 +133,10 @@
                                         </div>
 
                                         <div class="brdr_mtng">
-                                            <div class="col-sm-6">
-                                                <div class="lft_wlcm">
-                                                    <span>Hospital:</span>
-                                                    <h3>Lorem ipsum is a dummy</h3>
-                                                </div>
-                                            </div>
+                                            
 
-                                            <div class="col-sm-6">
-                                                <div class="lft_wlcm">
+                                            <div class="col-sm-6" ng-show="currentUser.zip">
+                                                <div class="lft_wlcm" >
                                                     <span>Zip:</span>
                                                     <h3>{{currentUser.zip}}</h3>
                                                 </div>
@@ -186,8 +183,11 @@
                                                 <div class="form-group lyr_scrp">
                                                     <label for="inputPassword3" class="col-sm-2 col-form-label nm_lbl">Contact Number</label>
                                                     <div class="col-sm-4">
-                                                        <input type="text" class="form-control frm_chn" id="phone" name="phone" ng-model="editprofileuser.phone" placeholder="Contact Number">
+                                                        <input type="number" required maxlength="3"   class="form-control frm_chn" id="phone" name="phone" ng-model="editprofileuser.phone" placeholder="Contact Number">
                                                     </div>
+                                                     <div ng-if="editprofileuser.phone.errors.minlength">
+                                                        Name must be at least 10 characters long.
+                                                      </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
@@ -199,26 +199,21 @@
                                                 </div>
 
                                                 <div class="form-group lyr_scrp">
-                                                    <label for="inputPassword3" class="col-sm-2 col-form-label nm_lbl">Country</label>
+                                                    <label for="inputPassword3" class="col-sm-2 col-form-label nm_lbl">Country  </label>
                                                     <div class="col-sm-4">
-                                                           <select ng-model="editprofileuser.address_country" name="country" class="form-control bdr-non" ng-options="country.name for country in countries track by country.code">
-                                                            <option value="">-- Select a Country --</option>
-                                                            </select>
+                                                           <select ng-model="editprofileuser.address_country" name="address_country" class="form-control bdr-non">
+                                                               <option ng-repeat="country in country" value="{{country.name}}" > {{country.name}}</option>
+                                                            </select> 
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-12">
-                                                <div class="form-group lyr_scrp">
-                                                    <label for="inputPassword3" class="col-sm-2 col-form-label nm_lbl">Hospital</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" class="form-control" id="inputPassword3" placeholder="Hospital">
-                                                    </div>
-                                                </div>
+                                                
                                                 <div class="form-group lyr_scrp">
                                                     <label for="inputPassword3" class="col-sm-2 col-form-label nm_lbl">Zip</label>
-                                                    <div class="col-sm-4"> 
-                                                        <input type="text" class="form-control zp_ssy" id="zip" name="zip" ng-model="editprofileuser.zip" placeholder="Zip">
+                                                    <div class="col-sm-4">  
+                                                        <input type="text" required maxlength="6" class="form-control zp_ssy" id="zip" name="zip" ng-model="editprofileuser.zip" placeholder="Zip">
                                                     </div>
                                                 </div>
                                             </div>
@@ -272,8 +267,10 @@
                                 $rootScope.currentUser = currentUser;
                         console.log($rootScope.currentUser);
             });
-            </script>  
+            
+  
 
+            </script>    
 
     </body>
 </html>    

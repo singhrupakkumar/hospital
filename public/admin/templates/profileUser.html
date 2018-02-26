@@ -1,5 +1,4 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+
     <section class="content-header">
       <h1>
         User Profile
@@ -20,9 +19,9 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="dist/img/user2-160x160.jpg" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="{{currentUser.image}}" alt="{{currentUser.username}}">
 
-              <h3 class="profile-username text-center">{{currentUser.firstname}} {{currentUser.lastname}}</h3>
+              <h3 class="profile-username text-center">{{currentUser.username}}</h3>
 
               <p class="text-muted text-center">Administrator</p>
 
@@ -37,7 +36,7 @@
                 
               </ul>
               <a ui-sref="editUser({id:currentUser._id})" class="btn btn-primary btn-block"><b>Edit Account</b></a>              
-              <a ui-sref="changePass({id:currentUser._id})" class="btn btn-primary btn-block"> <b>Change Password</b></a>
+              <a ui-sref="changePassword({id:currentUser._id})" class="btn btn-primary btn-block"> <b>Change Password</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -58,9 +57,9 @@
                 <!-- Post -->
                 <div class="post">
                   <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="dist/img/user2-160x160.jpg" alt="user image">
+                    <img class="img-circle img-bordered-sm" src="{{currentUser.image}}" alt="{{currentUser.username}}">
                         <span class="username">
-                          <a href="#">{{currentUser.firstname}} {{currentUser.lastname}}</a>
+                          <a href="#">{{currentUser.username}} </a>
                           <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
                         </span>
                     <span class="description">Today</span>
@@ -85,5 +84,3 @@
       <!-- /.row -->
 
     </section>
-    <!-- /.content -->
-  </div>

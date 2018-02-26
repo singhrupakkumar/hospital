@@ -80,7 +80,13 @@
 
 
 
-
+  <script type='text/javascript'>
+                        var currentUser = <%- JSON.stringify(user); %> ;
+        app.run(function($rootScope) {
+                                $rootScope.currentUser = currentUser;
+                        console.log($rootScope.currentUser);
+        });
+        </script>  
 
 </body>
 </html>

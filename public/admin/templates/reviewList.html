@@ -1,0 +1,68 @@
+
+<section class="content-header">
+  
+    <h1>
+    Review List    
+    <small></small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Reviews</li>
+    </ol>
+    
+   
+</section>
+    <div class="form-group">
+        <div class="alert alert-success" ng-show="del">  
+            <strong ng-bind="del" ></strong> 
+        </div>
+    </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Reviews List</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="reviewlist" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr. no</th>
+                                    <th scope="col">Reviewer</th>
+                                    <th scope="col">Hospital</th>
+                                    <th scope="col">Reviews</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Created</th> 
+                                   
+                                </tr>
+                            </thead>   
+                            <tbody>
+
+                                <tr ng-repeat='review in reviews track by $index'>
+                                    <td ng-class="'{{review._id}}'">{{$index + 1}}</td>                                              
+                                    <td ng-class="'{{review._id}}'">{{review.user_info.username}}</td>
+                                    <td ng-class="'{{review._id}}'">{{review.hospital_info.title}} </td>
+                                    <td ng-class="'{{review._id}}'">{{review.text}} </td>
+                                    <td ng-class="'{{review._id}}'">{{review.rating}} </td>
+                                    
+                                    <td ng-class="'{{review._id}}'">{{review.created_at | date}}</td> 
+
+                                </tr>                                
+                            </tbody> 
+                        </table>
+                    </div>
+                  
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>  

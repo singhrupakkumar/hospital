@@ -1,0 +1,182 @@
+<html lang="en" ng-app='fwrk.home' ng-controller="Myhospital">     
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="description" content="PerDIEMz">  
+        <meta name="author" content="Rupak Kumar Singh">
+        <title>PerDIEMz</title>
+
+
+        <!-- Bootstrap -->
+        <link href="/home/css/bootstrap.min.css" rel="stylesheet">  
+        <!-- Custom Style Css --> 
+        <link href="/home/css/style.css" rel="stylesheet">
+        <!-- font awesome Style Css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <!-- font Roboto Style Css -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+        <!-- Include all compiled plugins (below), or include individual files as needed --> 
+        <script src="/home/js/bootstrap.min.js"></script>  
+
+
+
+    </head>
+    <body>
+
+        <div ng-include='"/home/templates/header.html"'></div>  
+        <!-----banner-section----->
+        <div class="apron_pic">
+            <img src="/admin/uploads/hospitals/{{myhospital.data[0].bannerimage}}">    
+
+            <div class="sign_bner">
+                <h3>{{myhospital.data[0].title}}</h3>
+                <span class="loct_txt"><i class="fa fa-map-marker" aria-hidden="true"></i>{{myhospital.data[0].city}}, {{myhospital.data[0].country}}</span>
+            </div>
+        </div>
+        <!-----------desc_section----------->
+        <div class="dec_sctn">
+            <div class="container">
+                <div class="row">
+                    <div class="dec_whle">
+                        <h3>Description</h3>
+                        {{myhospital.data[0].description}}    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-----------hsptl_section----------->
+        <div class="hsptl_sction">      
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12" style="padding:0px;">
+                        <div class="panel with-nav-tabs panel-success">
+                            <div class="panel-heading2">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab1success" data-toggle="tab">Staff</a></li>
+                                    <li><a href="#tab2success" data-toggle="tab">Review</a></li>
+                                    <li><a href="#tab3success" data-toggle="tab">Gallery</a></li>    
+
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="tab1success">
+
+                                        <div class="cvr_my">  
+                                              
+                                            <div class="col-sm-3" ng-repeat="(key ,value) in myhospital.staff">    
+                                                <div class="all_myptl">
+                                                    <div class="hstl_empt">
+                                                        <img ng-show="value.staff_info[0].image" ng-src="{{value.staff_info[0].image}}">
+                                                         <img ng-show="!value.staff_info[0].image" ng-src="/home/images/noimage.png">
+                                                      
+                                                    </div>
+                                                    <h3>{{value.staff_info[0].username}}</h3>
+                                                    <h5>{{value.staff_info[0].type}}</h5>
+                                                    <div class="star_shn">
+                                                        <ul>
+                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="snd_docmnt">
+                                                        {{value.staff_info[0].description}}
+
+                                                    </div>
+                                                </div>  
+                                            </div>
+
+                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab2success">
+
+
+
+
+                                        <div class="hspt_rvw">
+                                            <h3>Reviews</h3>
+                                            <ul>  
+                                                <li ng-repeat="(key ,value) in myhospital.data[0].reviews_info">
+                                                    <div class="read_scss">
+                                                        <div class="pc_fde" ng-show="value.image">  
+                                                            <img src="{{value.image}}">
+                                                        </div>
+                                                        <span ng-show="value.text">{{value.text}}</span>     
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="tab-pane fade" id="tab3success">
+                                        <div class="glry_stlsh">     
+                                            <div class="col-sm-3" ng-repeat="(key ,value) in myhospital.image | commaBreak">  
+                                                <div class="glry_cln">
+                                                    <img ng-src="/admin/uploads/hospitals/{{value}}" class="myimg">
+                                                </div>  
+                                            </div> 
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+
+        <!-------------footer-section---------------->  
+
+        <div ng-include='"/home/templates/footer.html"'></div>
+
+        <!-- Angular Material Dependencies -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <!-- UI Router -->
+        <script src="https://cdn.jsdelivr.net/npm/angular-ui-router@0.4.3/release/angular-ui-router.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+
+        <!-- Angular Material -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+
+
+        <!-- Custom JS -->
+        <script src='/home/js/app.js'></script>
+        <script src='/home/js/controllers/user.js'></script>
+
+        <script src='/common/modules/users.js'></script>
+        <script src='/common/modules/hospitals.js'></script>
+        <script src='/common/modules/pages.js'></script>
+
+
+
+
+        <script type='text/javascript'>
+                             var currentUser = <%- JSON.stringify(user); %> ;
+             app.run(function($rootScope) {
+                                     $rootScope.currentUser = currentUser;
+                             console.log($rootScope.currentUser);
+      });
+        </script>     
+
+
+    </body>
+</html>    

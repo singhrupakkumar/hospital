@@ -9,10 +9,25 @@ usersModule.service('Users', function($http) {
             return $http.get('/api/users').then(function(userList) {
                 return userList.data;
             });
+        },contactall: function() { 
+            return $http.get('/api/contactall').then(function(userList) {
+                return userList.data;
+            });
+        },reviewall: function() { 
+            return $http.get('/api/reviewall').then(function(reviewall) {
+                return reviewall.data;
+            });
         },
          doctorall: function() { 
             return $http.get('/api/getdoctor').then(function(userList) {  
-                return userList.data;
+                return userList.data;  
+            });
+        },
+         dashboard: function() {   
+            return $http.get('/api/dashboard').then(function(record) {     
+                
+            
+                return record.data;    
             });
         },
         add: function(newUser) {
@@ -168,9 +183,7 @@ usersModule.service('Users', function($http) {
                 });
                 },
         changePassword: function(salt) {
-//            console.log("here")
-//            console.log(salt);
-//            return false;
+
             return $http({
                 method: 'post',
                 url: '/api/changePassword',
@@ -285,23 +298,6 @@ usersModule.service('Users', function($http) {
                 return err;
             });
         },
-        verifyotp: function(newUser) {
-            console.log(newUser,"Hahaha");
-            return $http({
-                method: 'post',
-                url: '/api/checkcodelogin',
-                data: newUser
-            }).then(function(res) {
-                console.log("module response")
-                // return the new post
-                return res.data;
-            }).catch(function(err) {
-                console.error('Something went wrong adding the post!');
-                console.error(err);
-                return err;
-            });
-        },
-
          adminlogin: function(newUser) { 
             return $http({
                 method: 'post',
@@ -330,5 +326,60 @@ usersModule.service('Users', function($http) {
                 return err;
             });
         },
+        myhospital: function(id) {   
+            return $http({
+                method: 'post',
+                url: '/api/myhospitaldata',
+                data: id
+            }).then(function(res) {
+                // return the new post
+                return res.data; 
+            }).catch(function(err) {
+                console.error('Something went wrong adding the post!');
+                console.error(err);
+                return err;
+            });
+        }
+        ,
+        sendrequest: function(id) {                     
+            return $http({
+                method: 'post',
+                url: '/api/requests/add',
+                data: id
+            }).then(function(res) {
+                // return the new post
+                return res.data; 
+            }).catch(function(err) {
+                console.error('Something went wrong adding the post!');
+                console.error(err);
+                return err;
+            });
+        },
+         sendemail: function(id) {    
+            return $http({
+                method: 'post',
+                url: '/api/mailsend',
+                data: id
+            }).then(function(res) {
+                // return the new post
+                return res.data; 
+            }).catch(function(err) {  
+                console.error(err);
+                return err;
+            });
+        },
+         contactmarktoread: function(id) {
+            return $http({
+                method: 'post',
+                url: '/api/contactmarktoread',
+                data: id
+            }).then(function(res) {
+                // return the new post
+                return res.data; 
+            }).catch(function(err) {  
+                console.error(err);
+                return err;
+            });
+        }
     }
 });

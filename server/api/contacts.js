@@ -39,9 +39,9 @@ module.exports = function(apiRouter) {
 			smtpTransport.sendMail(mailOptions, function(error, info) {
 				console.log("mail");
 				if (error) { 
-					res.json({"error" : 1 ,"message" : "Email has not been sent!","err":error});
+					res.json({"error" : 1 ,"message" : "Email has not been sent!","err":error}); 
 				} else { 
-					res.json({"error" : 0 ,"message" :"Email has been sent please check your email","data":post});
+					res.json({"error" : 0 ,"message" :"Thank you for contacting. We will get back to you shortly.","data":post});
 				}
 			});
 		})

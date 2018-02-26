@@ -22,6 +22,27 @@ module.exports = function(apiRouter,serialize){
 
 
 
+    /*******************check dates*********************/
+
+       apiRouter.post('/availability/check', function(req, res){  
+
+       Availability.find({'userid':req.body.userid}, function(err, data) {  
+
+         if (err) res.json({error : 1, message: 'No data found!'}); 
+         
+         var dataarray = [];
+           data.forEach(function(value,index){
+               
+              dataarray.push( value.date);  
+               
+           });
+ 
+
+         res.json({error : 0 , data : dataarray});                               
+
+     }).sort({ created_at : 1 });
+
+   });
 
 
 
