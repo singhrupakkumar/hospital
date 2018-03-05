@@ -26,12 +26,12 @@ var transporter = nodemailer.createTransport({
     port: 587,
     auth: {
         user: "AKIAJSAXCWS5JXZL74GQ",
-        pass: "AmA4lgvGe18UdP4s626qPPixcBWO2I75zf2ioahIRn3s"
+        pass: "AmA4lgvGe18UdP4s626qPdddddddddddPixcBWO2I75zf2ioahIRn3s"
     } 
 });
 
 aws.config.update({    
-    secretAccessKey: 'iuDBe2S70cHGWDV5QtbhUhmUfqwxcmBDmP1908J0',  
+    secretAccessKey: 'iuDBe2Sdddd70cHGWDV5QtbhUhmUfqwxcmBDmP1908J0',  
     accessKeyId: 'AKIAJIW2ZI5CHDJU7X4A'
 });    
 
