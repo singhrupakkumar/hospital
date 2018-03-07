@@ -40,7 +40,7 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 //    });
 //  }
 
-mongoose.connect('mongodb://hospital:hospital@ds245347.mlab.com:45347/hospital_dbname');
+mongoose.connect('mongodb://hospital:hospital@ds245347.mlab.com:45347/hospital_dbname11');
 mongoose.connection.on('open', function() {
     console.log('Mongoose connected');
 });
