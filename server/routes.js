@@ -25,14 +25,14 @@ var transporter = nodemailer.createTransport({
     host: 'email-smtp.us-east-1.amazonaws.com',
     port: 587,
     auth: {
-        user: "AKIAJSAXCWS5JXZL74GQ",
-        pass: "AmA4lgvGe18UdP4s626qPdddddddddddPixcBWO2I75zf2ioahIRn3s"
+        user: "AKIAJSAXCWS5JXZL74GQhhhhgtttq",
+        pass: "AmA4lgvGe18UdP4s626qPdddddddddddPixcBWO2I75zf2ioahIRn3syyrwww"
     } 
 });
 
 aws.config.update({    
-    secretAccessKey: 'iuDBe2Sdddd70cHGWDV5QtbhUhmUfqwxcmBDmP1908J0',  
-    accessKeyId: 'AKIAJIW2ZI5CHDJU7X4A'
+    secretAccessKey: 'iuDBe2Sdddd70wcHGWDwV5QtbhUhmUfqwxcmBDmP1908J0',  
+    accessKeyId: 'AKIAJIW2ZI5CHDJU7Xrt4A'
 });    
 
 
